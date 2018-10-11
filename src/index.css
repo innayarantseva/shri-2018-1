@@ -1,3 +1,11 @@
+/* reset */
+
+html,
+body {
+    margin:  0;
+    padding: 0;
+}
+
 /* Header Styles */
 
 .header {
@@ -39,9 +47,11 @@
     cursor:     pointer;
     transition: all ease-in-out .2s;
 }
-
 .header__item:not(:last-child) {
     padding-right: 28px;
+}
+.header__item:hover {
+    opacity: 1;
 }
 
 /* Section Styles */
@@ -76,6 +86,8 @@
     flex-direction:  column;
     justify-content: space-evenly;
 
+    position: relative;
+
     background-color: #FAFAFA;
     border-radius:    20px;
 
@@ -86,11 +98,40 @@
 
     grid-row: span 1;
 }
-
 .card:hover {
     background-color: #F3F3F3;
     box-shadow:       0 2px 6px 0 rgba(197,186,186,0.50);
     transition:       background-color ease-in-out .2s;
+}
+
+.card__close,
+.card__action {
+    position: absolute;
+    right:    25px;
+
+    opacity: 0;
+}
+.card__close  img,
+.card__action img {
+    width:  17px;
+    height: 17px;
+}
+.card__close {
+    top: 25px;
+}
+.card__action {
+    bottom: 25px;
+
+    background:    #F3F3F3;
+    box-shadow:    0px 0px 5px 15px #F3F3F3;
+    border-radius: 17px;
+}
+
+.card:hover .card__close,
+.card:hover .card__action {
+    opacity: 1;
+
+    transition: opacity ease-in-out .2s;
 }
 
 .card__size_s {
@@ -333,6 +374,22 @@
     top: 8px;
 }
 
+/* climate styles */
+
+.climate {
+    display: flex;
+
+    font-size: 18px;
+    color:     #000000;
+}
+.climate__temperature {
+    margin-right: 52px;
+}
+.climate__temperature-value,
+.climate__humidity-value {
+    font-weight: 800;
+}
+
 /* footer styles */
 
 .footer {
@@ -366,6 +423,15 @@
 
 
 /* Media Queries */
+
+@media screen and (max-width: 1146px) {
+    .section {
+        padding: 0 40px;
+    }
+    .list {
+        grid-template-columns: repeat(auto-fill, minmax(161px, 1fr));
+    }
+}
 
 @media screen and (max-width: 718px) {
     .section {
@@ -473,6 +539,10 @@
     .footer > .menu {
         flex-direction: column;
         align-items:    center;
+    }
+
+    .climate {
+        justify-content: space-between;
     }
 }
 

@@ -14,6 +14,7 @@ if ('content' in document.createElement('template')) {
     let template        = document.querySelector( '.card-template' ),
         controlTemplate = document.querySelector( '.touch-controls' ),
         musicTemplate   = document.querySelector( '.music' ),
+        climateTemplate = document.querySelector( '.climate' ),
         list            = document.querySelector( '.list' );
 
     for ( let i = 0; i < data.events.length; i++ ) {
@@ -66,16 +67,27 @@ if ('content' in document.createElement('template')) {
                     trackTime  = musicClone.querySelector( '.music__track-time'   ),
                     volume     = musicClone.querySelector( '.music__track-volume' );
 
-                    albumcover.setAttribute( 'src', data.events[i].data.albumcover );
+                albumcover.setAttribute( 'src', data.events[i].data.albumcover );
 
-                    track    .textContent = `${data.events[i].data.artist} — ${data.events[i].data.track.name}`;
-                    trackTime.textContent = data.events[i].data.track.length;
-                    volume   .textContent = data.events[i].data.volume;
+                track    .textContent = `${data.events[i].data.artist} — ${data.events[i].data.track.name}`;
+                trackTime.textContent = data.events[i].data.track.length;
+                volume   .textContent = data.events[i].data.volume;
 
                 cardData.appendChild( musicClone );
             }
+            if ( data.events[i].data.temperature && data.events[i].data.humidity ) {
+                let climateClone = document.importNode( climateTemplate.content, true );
+
+                let temperature = climateClone.querySelector( '.climate__temperature-value' ),
+                    humidity    = climateClone.querySelector( '.climate__humidity-value' );
+
+                temperature.textContent = `${data.events[i].data.temperature} C`;
+                humidity   .textContent = `${data.events[i].data.humidity}%`;
+
+                cardData.appendChild( climateClone );
+            }
         } else {
-            cardData.remove()
+            cardData.remove();
         }
 
         if ( (data.events[i].source === 'Сенсор движения') && ('ontouchstart' in document.documentElement) ) {

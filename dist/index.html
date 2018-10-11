@@ -57,6 +57,12 @@
                 <div class="card__description"></div>
                 <div class="card__data"></div>
             </div>
+            <div class="card__close">
+                <img src="./assets/cross.svg"/>
+            </div>
+            <div class="card__action">
+                <img src="./assets/Next.svg"/>
+            </div>
         </div>
     </template>
 
@@ -69,6 +75,19 @@
             <div class="card__brightness">
                 <span>Яркость:</span>
                 <span class="card__brightness-value">100%</span>
+            </div>
+        </div>
+    </template>
+
+    <template class="climate">
+        <div class="card__climate climate">
+            <div class="climate__temperature">
+                <span class="climate__title">Температура: </span>
+                <span class="climate__temperature-value"></span>
+            </div>
+            <div class="climate__humidity">
+                <span class="climate__title">Влажность: </span>
+                <span class="climate__humidity-value"></span>
             </div>
         </div>
     </template>
