@@ -45,6 +45,7 @@ if ('content' in document.createElement('template')) {
             }
             if ( data.events[i].data.image ) {
                 cardData.innerHTML = `<img src="${ data.events[i].data.image }" />`;
+                cardData.innerHTML = `<div class="card__data-image" style="background-image: url('${ data.events[i].data.image }')"> <div/>`;
             }
             if ( data.events[i].data.buttons ) {
                 const buttonsHTML = data.events[i].data.buttons.map(
@@ -92,6 +93,49 @@ if ('content' in document.createElement('template')) {
 
         if ( (data.events[i].source === 'Сенсор движения') && ('ontouchstart' in document.documentElement) ) {
             cardData.appendChild( document.importNode( controlTemplate.content, true ) );
+
+            /*cardData.addEventListener('pointerdown', (event) => {
+                console.log(event.type, event);
+            });*/
+
+
+
+            let currentGesture = null;
+            const nodeState = { startPosition: 0 };
+
+            cardData
+                .querySelector('.card__data-image')
+                .addEventListener('pointerdown', (event) => {
+                    currentGesture = {
+                        startX:        event.x,
+                        prevX:         event.x,
+                        startPosition: nodeState.startPosition,
+                    };
+
+                    console.log(event.type);
+                });
+
+            cardData
+                .querySelector('.card__data-image')
+                .addEventListener('pointermove', (event) => {
+                    if (!currentGesture) { return; }
+
+                    console.log(event.type);
+
+                    const {startX, prevX, startPosition} = currentGesture;
+                    const {x} = event;
+                    const dx = x - startX;
+
+                    cardData.querySelector('.card__data-image').style.backgroundPosition = `${startPosition + dx}px 50%`;
+                    nodeState.startPosition = startPosition + dx;
+
+                    currentGesture.prevX = x;
+                });
+
+            cardData.addEventListener('pointerup',     (e) => console.log(e.type));
+            cardData.addEventListener('pointercancel', (e) => console.log(e.type));
+
+
             console.log('touch');
         } else {
             console.log('не touch');
@@ -101,12 +145,9 @@ if ('content' in document.createElement('template')) {
 
         // оптимизировать: складывать в fragment, аппендить фрагмент
         list.appendChild(clone);
-
-
     }
 
 } else {
   // Find another way to add the rows to the table because
   // the HTML template element is not supported.
 };
-
