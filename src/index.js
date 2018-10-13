@@ -1,9 +1,5 @@
-import styles from './index.css';
-
 const data = require('./events.json');
-
 console.log(data);
-
 
 // Test to see if the browser supports the HTML template element by checking
 // for the presence of the template element's content attribute.
@@ -26,7 +22,6 @@ if ('content' in document.createElement('template')) {
             source      = clone.querySelector( '.card__source'      ),
             time        = clone.querySelector( '.card__time'        ),
             description = clone.querySelector( '.card__description' ),
-            content     = clone.querySelector( '.card__content'     ),
             cardData    = clone.querySelector( '.card__data' );
 
         icon.querySelector( 'img' ).setAttribute( 'src', `./assets/${data.events[i].icon}.svg` );
@@ -106,7 +101,7 @@ if ('content' in document.createElement('template')) {
     }
 
 } else {
-  // Find another way to add the rows to the table because
-  // the HTML template element is not supported.
-};
+    // Find another way to add the rows to the table because
+    // the HTML template element is not supported.
+}
 
