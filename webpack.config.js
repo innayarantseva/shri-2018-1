@@ -1,36 +1,32 @@
-const path = require('path');
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const CopyWebpackPlugin = require('copy-webpack-plugin');
+const PUBLIC_PATH       = require('path').join(__dirname, 'public'),
+      CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
+  mode: 'development',
   entry: './src/index.js',
   output: {
-    filename: 'main.js',
-    path: path.resolve(__dirname, 'dist')
+    path: PUBLIC_PATH,
+    filename: 'main.js'
+  },
+  devServer: {
+    contentBase: PUBLIC_PATH,
+    compress: true,
+    port: 9000
   },
   plugins: [
-    new MiniCssExtractPlugin({
-      // Options similar to the same options in webpackOptions.output
-      // both options are optional
-      filename: "main.css",
-      chunkFilename: "[id].css"
-    }),
     new CopyWebpackPlugin([
-        {from:'./src/assets',to:'assets'}
+      {from:'./src/assets',to:'assets'}
     ])
   ],
   module: {
     rules: [
       {
-        test: /\.css$/,
-        use: [
-          {
-            loader: MiniCssExtractPlugin.loader
-          },
-          "css-loader"
-        ]
-      }
-    ]
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: "eslint-loader",
+        options: {}
+      },
+    ],
   },
   optimization: { minimize: false }
 };
