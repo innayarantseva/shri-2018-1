@@ -1,12 +1,13 @@
 const express = require( 'express' ),
-      fs      = require('fs'),
+      // fs      = require('fs'),
       app     = express(),
       port    = 8000,
 
-      events = require( '../data/events.json' );
+      types = require( './data/types.json' ),
+      data  = require( './data/events.json' );
 
 
-const requestTime = function (req, res, next) {
+const requestTime = (req, res, next) => {
     const time = parseInt( process.uptime(), 10 );
 
     // сколько часов, минут и оставшихся секунд
@@ -25,21 +26,58 @@ const requestTime = function (req, res, next) {
     next();
 }
 
-app.use(requestTime);
+// хелперные функции для middleware 'requestEvents'
+const isTypesValid = queryTypes =>
+    queryTypes.reduce(
+        (acc, queryType) => !!types.find( type => type === queryType ),
+        true
+    );
+
+const filterEvents = ( data, queryTypes ) =>
+    queryTypes.length
+        ? data.filter(
+            event => queryTypes.find( type => type === event.type )
+        )
+        : data;
 
 
+const requestEvents = (req, res, next) => {
+    let queryTypes =
+        req.query.type
+            ? req.query.type.split(':')
+            : [],
+        { events } = data;
+
+    res.isTypesValid = isTypesValid( queryTypes );
+
+    if ( res.isTypesValid ) {
+        res.events = filterEvents( events, queryTypes );
+    }
+    next();
+
+}
+
+app.use( requestTime );
 app.get(
     '/status',
-    (req, res) => res.send( res.serverUptime ).end()
+    (req, res) => res.status(200).send( res.serverUptime ).end()
 );
 
+
+app.use( requestEvents );
 app.get(
     '/api/events',
     (req, res) => {
-        let stream = fs.createReadStream( __dirname + '/data/events.json' );
+        if (res.isTypesValid) {
+            res.status(200).json( { events: res.events } ).end();
+        } else {
+            res.status(400).send( 'incorrect type' ).end();
+        }
 
-        res.setHeader( 'Content-Type', 'application/json' );
-        stream.pipe( res );
+        // убираю стримы, так как непонятно, как их фильтровать без применения сторонних библиотек
+        // let stream = fs.createReadStream( __dirname + '/data/events.json' );
+        // res.setHeader( 'Content-Type', 'application/json' );
+        // stream.pipe( res );
     }
 );
 
@@ -51,7 +89,17 @@ app.get(
     }
 );
 
+app.use(
+    (error, req, res, next) => {
+        console.log( error );
+        res.status(500).send( 'Something went wrong', error );
+    }
+);
+
 app.listen(
     port,
-    () => console.log(`Server listening on port ${port}!`)
+    error => {
+        error && console.log( 'Something bad happened: ', error );
+        console.log( `Server listening on port ${port}!` );
+    }
 );
