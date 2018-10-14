@@ -20,10 +20,21 @@ const videos = [
 
 const scale = (e) => {
     const videoContainer = e.target.parentNode,
+          video          = videoContainer.querySelector( '.video' ),
           controls       = videoContainer.querySelector( '.video-container__controls' );
 
     videoContainer.classList.add( 'video-full' );
     controls.style.display = 'flex';
+
+    video.muted = false;
+
+    // var context = new AudioContext();
+
+    // var videoSource = context.createMediaElementSource( video );
+    // var analyser = context.createAnalyser();
+
+    // videoSource.connect(analyser);
+    // analyser.connect(context.destination);
 
     switch ( e.target.id.split('-')[1] ) {
         case '1': videoContainer.style.transformOrigin = 'top left';     break;
@@ -36,7 +47,10 @@ const scale = (e) => {
 
 const scaleDown = (e) => {
     const videoContainer = e.target.closest( '.video-container' ),
+          video          = videoContainer.querySelector( '.video' ),
           controls       = e.target.parentNode;
+
+    video.muted = true;
 
     videoContainer.classList.remove( 'video-full' );
     controls.style.display = 'none';
