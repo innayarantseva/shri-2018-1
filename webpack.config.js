@@ -1,12 +1,17 @@
-const PUBLIC_PATH       = require('path').join(__dirname, 'public'),
+const path = require('path'),
+      PUBLIC_PATH       = path.join(__dirname, 'public'),
       CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   mode: 'development',
-  entry: './src/index.js',
+  entry: {
+    main: ['./src/index.js'],
+    camera: ['./src/camera.js']
+  },
+  // entry: './src/index.js',
   output: {
     path: PUBLIC_PATH,
-    filename: 'main.js'
+    filename: '[name].js'
   },
   devServer: {
     contentBase: PUBLIC_PATH,
@@ -23,8 +28,7 @@ module.exports = {
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        loader: "eslint-loader",
-        options: {}
+        loader: "eslint-loader"
       },
     ],
   },

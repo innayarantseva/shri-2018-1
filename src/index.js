@@ -1,8 +1,5 @@
 const data = require('../data/events.json');
-console.log(data);
-
-fetch('http://localhost:3000/api/example')
-    .then( (response) => console.log(response) );
+// console.log(data);
 
 // Test to see if the browser supports the HTML template element by checking
 // for the presence of the template element's content attribute.
