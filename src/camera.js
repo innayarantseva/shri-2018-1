@@ -1,16 +1,29 @@
 const videos = [
-    document.querySelector( '#video-1' ),
-    document.querySelector( '#video-2' ),
-    document.querySelector( '#video-3' ),
-    document.querySelector( '#video-4' )
-];
+            document.querySelector( '#video-1' ),
+            document.querySelector( '#video-2' ),
+            document.querySelector( '#video-3' ),
+            document.querySelector( '#video-4' )
+        ],
+      brightness = [
+            document.querySelector( '#video-1_brightness' ),
+            document.querySelector( '#video-2_brightness' ),
+            document.querySelector( '#video-3_brightness' ),
+            document.querySelector( '#video-4_brightness' )
+        ],
+      contrast = [
+            document.querySelector( '#video-1_contrast' ),
+            document.querySelector( '#video-2_contrast' ),
+            document.querySelector( '#video-3_contrast' ),
+            document.querySelector( '#video-4_contrast' )
+        ]
+;
 
 const scale = (e) => {
     const videoContainer = e.target.parentNode,
-          button         = videoContainer.querySelector( '.video-container__return' );
+          controls       = videoContainer.querySelector( '.video-container__controls' );
 
     videoContainer.classList.add( 'video-full' );
-    button.style.display = 'block';
+    controls.style.display = 'flex';
 
     switch ( e.target.id.split('-')[1] ) {
         case '1': videoContainer.style.transformOrigin = 'top left';     break;
@@ -22,12 +35,27 @@ const scale = (e) => {
 };
 
 const scaleDown = (e) => {
-    const videoContainer = e.target.parentNode,
-          button         = e.target;
+    const videoContainer = e.target.closest( '.video-container' ),
+          controls       = e.target.parentNode;
 
     videoContainer.classList.remove( 'video-full' );
-    button.style.display = 'none';
+    controls.style.display = 'none';
 };
+
+const changeBrightness = (e) => {
+    const videoContainer = e.target.closest( '.video-container' ),
+          video = videoContainer.querySelector( '.video' );
+
+    video.style.filter = `brightness(${e.target.value}%)`;
+};
+
+const changeContrast = (e) => {
+    const videoContainer = e.target.closest( '.video-container' ),
+          video = videoContainer.querySelector( '.video' );
+
+    video.style.filter = `contrast(${e.target.value}%)`;
+};
+
 
 videos.forEach(
     video => {
@@ -37,4 +65,10 @@ videos.forEach(
             .querySelector( '.video-container__return' )
             .addEventListener( 'click', scaleDown );
     }
+);
+brightness.forEach(
+    control => control.addEventListener( 'input', changeBrightness )
+);
+contrast.forEach(
+    control => control.addEventListener( 'input', changeContrast )
 );
