@@ -1,5 +1,8 @@
-const data = require('./events.json');
+const data = require('../data/events.json');
 console.log(data);
+
+fetch('http://localhost:3000/api/example')
+    .then( (response) => console.log(response) );
 
 // Test to see if the browser supports the HTML template element by checking
 // for the presence of the template element's content attribute.
@@ -114,7 +117,7 @@ if ('content' in document.createElement('template')) {
 
                     console.log(event.type);
 
-                    const {startX, prevX, startPosition} = currentGesture;
+                    const {startX, startPosition} = currentGesture;
                     const {x} = event;
                     const dx = x - startX;
 
