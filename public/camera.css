@@ -21,6 +21,8 @@
 
     overflow: hidden;
     transition: transform ease-in-out .2s;
+
+    background: #ffffff;
 }
 .video-container__controls {
     display:        none;
@@ -40,4 +42,27 @@
 .video-full {
     transform: scale(2);
     z-index:   1;
+}
+
+.video-full .video-container__controls,
+.video-full .video-container__volume {
+    display: flex;
+}
+/* audio */
+
+.video-container__volume {
+    display: none;
+
+    width:  300px;
+    height: 20px;
+
+    position: absolute;
+    bottom:   0px;
+    left:     0px;
+
+    z-index: 3;
+
+    background: black;
+
+    transform-origin: left;
 }

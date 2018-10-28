@@ -21,20 +21,37 @@ const videos = [
 const scale = (e) => {
     const videoContainer = e.target.parentNode,
           video          = videoContainer.querySelector( '.video' ),
-          controls       = videoContainer.querySelector( '.video-container__controls' );
+          volumeMeter    = videoContainer.querySelector( '.video-container__volume' );
 
     videoContainer.classList.add( 'video-full' );
-    controls.style.display = 'flex';
 
     video.muted = false;
 
-    // var context = new AudioContext();
+    // audio
 
-    // var videoSource = context.createMediaElementSource( video );
-    // var analyser = context.createAnalyser();
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
-    // videoSource.connect(analyser);
-    // analyser.connect(context.destination);
+    const analyser = audioCtx.createAnalyser();
+    analyser.connect(audioCtx.destination);
+
+    const source = audioCtx.createMediaElementSource( video );
+    source.connect(analyser);
+    analyser.fftSize = 32;
+
+    const streamData = new Uint8Array(analyser.frequencyBinCount);
+
+    const getVolume = () => {
+        analyser.getByteFrequencyData(streamData);
+        return streamData.reduce((acc, val) => acc + val, 0) / 255 / streamData.length;
+    };
+
+    const loop = () => {
+        const volume = getVolume();
+        volumeMeter.style.transform = `scaleX(${ volume })`;
+        requestAnimationFrame(loop);
+    };
+
+    loop();
 
     switch ( e.target.id.split('-')[1] ) {
         case '1': videoContainer.style.transformOrigin = 'top left';     break;
@@ -47,13 +64,11 @@ const scale = (e) => {
 
 const scaleDown = (e) => {
     const videoContainer = e.target.closest( '.video-container' ),
-          video          = videoContainer.querySelector( '.video' ),
-          controls       = e.target.parentNode;
+          video          = videoContainer.querySelector( '.video' );
 
     video.muted = true;
 
     videoContainer.classList.remove( 'video-full' );
-    controls.style.display = 'none';
 };
 
 const changeBrightness = (e) => {
