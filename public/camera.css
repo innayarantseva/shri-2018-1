@@ -1,0 +1,43 @@
+.cameras {
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+}
+
+.cameras__row {
+    display: flex;
+}
+
+.video {
+    width:  100%;
+    height: 300px;
+    object-fit: cover;
+}
+.video-container {
+    width: 50%;
+
+    position: relative;
+
+    overflow: hidden;
+    transition: transform ease-in-out .2s;
+}
+.video-container__controls {
+    display:        none;
+    flex-direction: column;
+
+    position: absolute;
+    top:      10px;
+    left:     10px;
+
+    z-index: 2;
+
+    font-size:     10px;
+    background:    rgba(255,255,255,0.5);
+    padding:       7px;
+    border-radius: 10px;
+}
+.video-full {
+    transform: scale(2);
+    z-index:   1;
+}
