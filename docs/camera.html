@@ -1,0 +1,142 @@
+<!doctype html>
+<html>
+  <head>
+    <meta name="robots" content="noindex">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="common.css">
+    <link rel="stylesheet" href="camera.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+
+    <title>Камеры</title>
+  </head>
+  <body>
+
+    <header class="header">
+        <img class="header__logo" src="./assets/logo.svg" />
+        <div class="menu">
+            <div class="header__item">События</div>
+            <div class="header__item">Сводка</div>
+            <div class="header__item">Устройства</div>
+            <div class="header__item">Сценарии</div>
+            <div class="header__item">Камеры</div>
+        </div>
+        <img class="header__list" src="./assets/icon_list.svg">
+    </header>
+
+    <section class="section">
+      <h1 class="title">Видеонаблюдение</h1>
+      <div class="cameras">
+
+        <div class="cameras__row">
+
+            <div class="video-container">
+                <div class="video-container__controls">
+                    <button class="video-container__return">Все видео</button>
+                    <label for="brightness">Яркость</label>
+                    <input type="range" id="video-1_brightness" name="brightness" min="50" max="150" />
+                    <label for="contrast">Контрастность</label>
+                    <input type="range" id="video-1_contrast" name="contrast" min="50" max="150" />
+                </div>
+                <video id="video-1" class="video" muted autoplay></video>
+                <div class="video-container__volume"></div>
+            </div>
+
+            <div class="video-container">
+                <div class="video-container__controls">
+                    <button class="video-container__return">Все видео</button>
+                    <label for="brightness">Яркость</label>
+                    <input type="range" id="video-2_brightness" name="brightness" min="50" max="150" />
+                    <label for="contrast">Контрастность</label>
+                    <input type="range" id="video-2_contrast" name="contrast" min="50" max="150" />
+                </div>
+                <video id="video-2" class="video" muted autoplay></video>
+                <div class="video-container__volume"></div>
+            </div>
+
+        </div>
+
+        <div class="cameras__row">
+
+            <div class="video-container">
+                <div class="video-container__controls">
+                    <button class="video-container__return">Все видео</button>
+                    <label for="brightness">Яркость</label>
+                    <input type="range" id="video-3_brightness" name="brightness" min="50" max="150" />
+                    <label for="contrast">Контрастность</label>
+                    <input type="range" id="video-3_contrast" name="contrast" min="50" max="150" />
+                </div>
+                <video id="video-3" class="video" muted autoplay></video>
+                <div class="video-container__volume"></div>
+            </div>
+
+            <div class="video-container">
+                <div class="video-container__controls">
+                    <button class="video-container__return">Все видео</button>
+                    <label for="brightness">Яркость</label>
+                    <input type="range" id="video-4_brightness" name="brightness" min="50" max="150" />
+                    <label for="contrast">Контрастность</label>
+                    <input type="range" id="video-4_contrast" name="contrast" min="50" max="150" />
+                </div>
+                <video id="video-4" class="video" muted autoplay></video>
+                <div class="video-container__volume"></div>
+            </div>
+
+        </div>
+
+      </div>
+    </section>
+    <footer class="footer">
+        <div class="menu">
+            <div class="footer__item">Помощь</div>
+            <div class="footer__item">Обратная связь</div>
+            <div class="footer__item">Разработчикам</div>
+            <div class="footer__item">Условия использования</div>
+        </div>
+        <div class="footer__copyright">© 2001–2017  ООО «Яндекс»</div>
+    </footer>
+
+    <script>
+        function initVideo(video, url) {
+            if (Hls.isSupported()) {
+                var hls = new Hls();
+                hls.loadSource(url);
+                hls.attachMedia(video);
+                hls.on(Hls.Events.MANIFEST_PARSED, function () {
+                    video.play();
+                });
+            } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+                video.src = 'https://video-dev.github.io/streams/x36xhzz/x36xhzz.m3u8';
+                video.addEventListener('loadedmetadata', function () {
+                    video.play();
+                });
+            }
+        }
+
+        initVideo(
+            document.getElementById('video-1'),
+            'http://localhost:9191/master?url=http%3A%2F%2Flocalhost%3A3102%2Fstreams%2Fsosed%2Fmaster.m3u8'
+        );
+
+        initVideo(
+            document.getElementById('video-2'),
+            'http://localhost:9191/master?url=http%3A%2F%2Flocalhost%3A3102%2Fstreams%2Fcat%2Fmaster.m3u8'
+        );
+
+        initVideo(
+            document.getElementById('video-3'),
+            'http://localhost:9191/master?url=http%3A%2F%2Flocalhost%3A3102%2Fstreams%2Fdog%2Fmaster.m3u8'
+        );
+
+        initVideo(
+            document.getElementById('video-4'),
+            'http://localhost:9191/master?url=http%3A%2F%2Flocalhost%3A3102%2Fstreams%2Fhall%2Fmaster.m3u8'
+        );
+
+    </script>
+
+    <script src="camera.js"></script>
+  </body>
+</html>

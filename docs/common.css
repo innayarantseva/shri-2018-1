@@ -1,0 +1,170 @@
+/* reset */
+
+html,
+body,
+h1 {
+    margin:  0;
+    padding: 0;
+}
+
+/* Header Styles */
+
+.header {
+    display:     flex;
+    align-items: center;
+
+    background-color: #ffffff;
+
+    font-family: Arial, sans-serif;
+
+    border-bottom: 1px solid #F0F0F0;
+    margin-bottom: 30px;
+
+    overflow: hidden;
+}
+
+.header__logo {
+    width:   108px;
+    padding: 32px 40px 33px 40px;
+}
+
+.header__list {
+    display: none;
+
+    width: 16px;
+    min-width: 16px;
+    height: 13px;
+    min-height: 13px;
+}
+
+.header__item {
+    font-size:   16px;
+    font-weight: 600;
+    line-height: 20px;
+
+    color:   #333333;
+    opacity: 0.6;
+
+    cursor:     pointer;
+    transition: all ease-in-out .2s;
+}
+.header__item:not(:last-child) {
+    padding-right: 28px;
+}
+.header__item:hover {
+    opacity: 1;
+}
+
+/* Section Styles */
+
+.section {
+    font-family: Arial, sans-serif;
+    max-width: 1066px;
+    margin: auto;
+}
+
+.title {
+    color: #333333;
+    font-size: 36px;
+    font-weight: bold;
+    padding: 34px 0px 32px;
+}
+
+
+.list {
+    display:               grid;
+    grid-template-columns: repeat(auto-fill, 161px);
+    grid-auto-rows:        auto;
+    grid-gap:              20px;
+    grid-auto-flow:        dense;
+}
+
+
+
+/* footer styles */
+
+.footer {
+    width: 100%;
+
+    display:         flex;
+    align-items:     center;
+    justify-content: space-between;
+
+    font-family:    Arial, sans-serif;
+    font-size:      12px;
+    letter-spacing: 0.01px;
+    color:          #858585;
+
+    border-top: 1px solid #F0F0F0;
+    margin-top: 80px;
+}
+.footer__item {
+    padding: 12px;
+}
+.footer__copyright {
+    padding: 22px 36px 27px;
+}
+.footer > .menu {
+    padding: 10px 40px 15px;
+}
+
+.menu {
+    display: flex;
+}
+
+/* Media Queries */
+
+@media screen and (max-width: 1146px) {
+    .section {
+        padding: 0 40px;
+    }
+}
+
+@media screen and (max-width: 718px) {
+    .section {
+        padding: 0 20px 20px;
+    }
+
+    .header {
+        z-index: 2;
+        border: none;
+        margin-bottom: 0;
+    }
+    .header__list {
+        display: block;
+
+        position: absolute;
+        right: 20px;
+
+        cursor: pointer;
+    }
+    .header .menu {
+        display: none;
+    }
+    .header__logo {
+        width:   110px;
+        height:  37px;
+
+        padding: 12px 20px 13px;
+    }
+
+    .title {
+        font-size:   24px;
+        font-weight: bold;
+        padding:     0px 0px 19px;
+    }
+
+
+    .footer {
+        flex-direction:  column;
+    }
+
+    .footer > .menu {
+        flex-direction: column;
+        align-items:    center;
+    }
+
+    .climate {
+        justify-content: space-between;
+    }
+}
