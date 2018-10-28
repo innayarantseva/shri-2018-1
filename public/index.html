@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <link rel="stylesheet" href="common.css">
     <link rel="stylesheet" href="main.css">
 
     <title>Умный дом</title>
@@ -18,7 +19,9 @@
             <div class="header__item">Сводка</div>
             <div class="header__item">Устройства</div>
             <div class="header__item">Сценарии</div>
-            <div class="header__item">Камеры</div>
+            <div class="header__item">
+                <a href="./camera.html">Камеры></a>
+            </div>
         </div>
         <img class="header__list" src="./assets/icon_list.svg">
     </header>
@@ -39,7 +42,7 @@
     </footer>
 
     <template class="card-template">
-        <div class="card">
+        <div class="card" touch-action="none">
             <div class="card__header">
                 <div class="card__event-title">
                     <div class="card__icon">
@@ -70,11 +73,11 @@
         <div class="card__camera-controls">
             <div class="card__zoom">
                 <span>Приближение:</span>
-                <span class="card__zoom-value">0%</span>
+                <span class="card__zoom-value">300</span>
             </div>
             <div class="card__brightness">
                 <span>Яркость:</span>
-                <span class="card__brightness-value">100%</span>
+                <span class="card__brightness-value">1.1</span>
             </div>
         </div>
     </template>

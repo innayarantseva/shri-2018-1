@@ -1,8 +1,7 @@
-const data = require('../data/events.json');
-console.log(data);
+import { Touch } from './touch.js';
 
-fetch('http://localhost:3000/api/example')
-    .then( (response) => console.log(response) );
+const data = require('../data/events.json');
+// console.log(data);
 
 // Test to see if the browser supports the HTML template element by checking
 // for the presence of the template element's content attribute.
@@ -42,7 +41,7 @@ if ('content' in document.createElement('template')) {
                 cardData.innerHTML = '<img src="./assets/Richdata.svg" />';
             }
             if ( data.events[i].data.image ) {
-                cardData.innerHTML = `<div class="card__data-image" touch-action=“none” style="background-image: url('${ data.events[i].data.image }')"> <div/>`;
+                cardData.innerHTML = `<div class="card__data-image" touch-action=“none”><div class="card__data-image-bg" style="background-image: url('${ data.events[i].data.image }')"></div><div/>`;
             }
             if ( data.events[i].data.buttons ) {
                 const buttonsHTML = data.events[i].data.buttons.map(
@@ -90,52 +89,15 @@ if ('content' in document.createElement('template')) {
 
         if ( (data.events[i].source === 'Сенсор движения') && ('ontouchstart' in document.documentElement) ) {
             cardData.appendChild( document.importNode( controlTemplate.content, true ) );
-            cardData.setAttribute( 'touch-action', 'none' );
 
             // pointer events
 
-            // left-right move
-            let currentGesture = null;
-            const nodeState = { startPosition: 0 };
-
-            cardData
-                .querySelector('.card__data-image')
-                .addEventListener('pointerdown', (event) => {
-                    currentGesture = {
-                        startX:        event.x,
-                        prevX:         event.x,
-                        startPosition: nodeState.startPosition,
-                    };
-
-                    console.log(event.type);
-                });
-
-            cardData
-                .querySelector('.card__data-image')
-                .addEventListener('pointermove', (event) => {
-                    if (!currentGesture) { return; }
-
-                    console.log(event.type);
-
-                    const {startX, startPosition} = currentGesture;
-                    const {x} = event;
-                    const dx = x - startX;
-
-                    cardData.querySelector('.card__data-image').style.backgroundPosition = `${startPosition + dx}px 50%`;
-                    nodeState.startPosition = startPosition + dx;
-
-                    currentGesture.prevX = x;
-                });
-
-            // debug
-
-            cardData.addEventListener('pointerup',     (e) => console.log(e.type));
-            cardData.addEventListener('pointercancel', (e) => console.log(e.type));
-            cardData.addEventListener('pointerup',     (e) => console.log(e.type));
+            Touch( cardData );
 
 
             console.log('touch');
         } else {
+            // Touch();
             console.log('не touch');
         }
 

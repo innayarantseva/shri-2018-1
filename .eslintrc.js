@@ -10,10 +10,6 @@ module.exports = {
         "sourceType": "module"
     },
     "rules": {
-        "indent": [
-            1,
-            4
-        ],
         "linebreak-style": [
             1,
             "unix"
@@ -26,6 +22,7 @@ module.exports = {
             "error",
             "always"
         ],
+        "parser": "babel-eslint",
         "no-console": "off"
     }
 };
