@@ -22,6 +22,7 @@ module.exports = {
             "error",
             "always"
         ],
+        "parser": "babel-eslint",
         "no-console": "off"
     }
 };
