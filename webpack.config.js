@@ -5,8 +5,8 @@ const path = require('path'),
 module.exports = {
   mode: 'development',
   entry: {
-    main: ['./src/index.js'],
-    camera: ['./src/camera.js']
+    main: ['./src/index.ts'],
+    camera: ['./src/camera.ts']
   },
   // entry: './src/index.js',
   output: {
@@ -23,14 +23,25 @@ module.exports = {
       {from:'./src/assets',to:'assets'}
     ])
   ],
-  module: {
-    rules: [
-      {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        loader: "eslint-loader"
-      },
-    ],
+  resolve: {
+      extensions: ['.ts', '.tsx', '.js', '.json']
   },
+  module: {
+      rules: [{
+          // Include ts, tsx, js, and jsx files.
+          test: /\.(ts|js)x?$/,
+          exclude: /node_modules/,
+          loader: ['awesome-typescript-loader'],
+      }],
+  },
+  // module: {
+  //   rules: [
+  //     {
+  //       test: /\.js$/,
+  //       exclude: /node_modules/,
+  //       loader: "eslint-loader"
+  //     },
+  //   ],
+  // },
   optimization: { minimize: false }
 };

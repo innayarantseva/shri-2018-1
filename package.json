@@ -5,23 +5,37 @@
   "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack",
+    "build": "npm run build:js",
     "start": "webpack-dev-server",
-    "server": "node server/server.js"
+    "server": "node server/server.js",
+    "type-check": "tsc --noEmit",
+    "type-check:watch": "npm run type-check -- --watch",
+    "build:types": "tsc --emitDeclarationOnly",
+    "build:js": "babel src --extensions \".ts,.tsx\" --source-maps inline",
+    "bundle": "webpack"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@babel/cli": "^7.1.2",
+    "@babel/core": "^7.1.2",
+    "@babel/plugin-proposal-class-properties": "^7.1.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
+    "@babel/preset-env": "^7.1.0",
+    "@babel/preset-typescript": "^7.1.0",
+    "awesome-typescript-loader": "^5.2.1",
     "copy-webpack-plugin": "^4.5.2",
     "css-loader": "^1.0.0",
     "eslint": "^5.7.0",
     "eslint-loader": "^2.1.1",
     "mini-css-extract-plugin": "^0.4.3",
+    "typescript": "^3.1.3",
     "webpack": "^4.20.2",
     "webpack-cli": "^3.1.2"
   },
   "dependencies": {
+    "@types/node": "^10.12.2",
     "express": "^4.16.4",
     "webpack-dev-server": "^3.1.9"
   }

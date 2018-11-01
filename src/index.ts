@@ -1,30 +1,36 @@
-import { Touch } from './touch.js';
+import { Touch } from './touch'
 
-const data = require('../data/events.json');
-// console.log(data);
 
-// Test to see if the browser supports the HTML template element by checking
-// for the presence of the template element's content attribute.
+interface Data     { events:  any  };
+interface Template { content: Node };
+
+// type DivProps = JSX.IntrinsicElements["div"];
+interface Template extends HTMLElement {
+  content: Node
+}
+
+
+const data: Data = require('../data/events.json');
+
+
 if ('content' in document.createElement('template')) {
 
-    // Instantiate the table with the existing HTML tbody
-    // and the row with the template
-    let template        = document.querySelector( '.card-template' ),
-        controlTemplate = document.querySelector( '.touch-controls' ),
-        musicTemplate   = document.querySelector( '.music' ),
-        climateTemplate = document.querySelector( '.climate' ),
-        list            = document.querySelector( '.list' );
+    let template:        Template = document.querySelector( '.card-template' ),
+        controlTemplate: Template = document.querySelector( '.touch-controls' ),
+        musicTemplate:   Template = document.querySelector( '.music' ),
+        climateTemplate: Template = document.querySelector( '.climate' ),
+        list:            HTMLElement = document.querySelector( '.list' );
 
-    for ( let i = 0; i < data.events.length; i++ ) {
-        let clone = document.importNode( template.content, true );
+    for ( let i: number = 0; i < data.events.length; i++ ) {
+        let clone = <HTMLElement>document.importNode( template.content, true );
 
-        let card        = clone.querySelector( '.card'              ),
-            icon        = clone.querySelector( '.card__icon'        ),
-            title       = clone.querySelector( '.card__title'       ),
-            source      = clone.querySelector( '.card__source'      ),
-            time        = clone.querySelector( '.card__time'        ),
-            description = clone.querySelector( '.card__description' ),
-            cardData    = clone.querySelector( '.card__data' );
+        let card:        HTMLElement = clone.querySelector( '.card'              ),
+            icon:        HTMLElement = clone.querySelector( '.card__icon'        ),
+            title:       HTMLElement = clone.querySelector( '.card__title'       ),
+            source:      HTMLElement = clone.querySelector( '.card__source'      ),
+            time:        HTMLElement = clone.querySelector( '.card__time'        ),
+            description: HTMLElement = clone.querySelector( '.card__description' ),
+            cardData:    HTMLElement = clone.querySelector( '.card__data' );
 
         icon.querySelector( 'img' ).setAttribute( 'src', `./assets/${data.events[i].icon}.svg` );
         title      .textContent = data.events[i].title;
@@ -44,7 +50,7 @@ if ('content' in document.createElement('template')) {
                 cardData.innerHTML = `<div class="card__data-image" touch-action=“none”><div class="card__data-image-bg" style="background-image: url('${ data.events[i].data.image }')"></div><div/>`;
             }
             if ( data.events[i].data.buttons ) {
-                const buttonsHTML = data.events[i].data.buttons.map(
+                const buttonsHTML: Array<string> = data.events[i].data.buttons.map(
                     button => button === 'Да'
                                 ? `<div class="card__button card__button-bright">${button}</div>`
                                 : `<div class="card__button card__button-grey">${button}</div>`
@@ -57,12 +63,12 @@ if ('content' in document.createElement('template')) {
                 data.events[i].data.track      &&
                 data.events[i].data.volume
             ) {
-                let musicClone = document.importNode( musicTemplate.content, true );
+                let musicClone = <HTMLElement>document.importNode( musicTemplate.content, true );
 
-                let albumcover = musicClone.querySelector( '.music__cover'        ),
-                    track      = musicClone.querySelector( '.music__track-name'   ),
-                    trackTime  = musicClone.querySelector( '.music__track-time'   ),
-                    volume     = musicClone.querySelector( '.music__track-volume' );
+                let albumcover: HTMLElement = musicClone.querySelector( '.music__cover'        ),
+                    track:      HTMLElement = musicClone.querySelector( '.music__track-name'   ),
+                    trackTime:  HTMLElement = musicClone.querySelector( '.music__track-time'   ),
+                    volume:     HTMLElement = musicClone.querySelector( '.music__track-volume' );
 
                 albumcover.setAttribute( 'src', data.events[i].data.albumcover );
 
@@ -73,10 +79,10 @@ if ('content' in document.createElement('template')) {
                 cardData.appendChild( musicClone );
             }
             if ( data.events[i].data.temperature && data.events[i].data.humidity ) {
-                let climateClone = document.importNode( climateTemplate.content, true );
+                let climateClone = <HTMLElement>document.importNode( climateTemplate.content, true );
 
-                let temperature = climateClone.querySelector( '.climate__temperature-value' ),
-                    humidity    = climateClone.querySelector( '.climate__humidity-value' );
+                let temperature: HTMLElement = climateClone.querySelector( '.climate__temperature-value' ),
+                    humidity:    HTMLElement = climateClone.querySelector( '.climate__humidity-value' );
 
                 temperature.textContent = `${data.events[i].data.temperature} C`;
                 humidity   .textContent = `${data.events[i].data.humidity}%`;
