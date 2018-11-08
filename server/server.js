@@ -1,10 +1,14 @@
-const express = require( 'express' ),
+const express    = require( 'express' ),
       // fs      = require('fs'),
+      bodyParser = require( 'body-parser' ),
+
       app     = express(),
       port    = 8000,
 
       types = require( './data/types.json' ),
       data  = require( './data/events.json' );
+
+let appState = { location: 'index' };
 
 
 const requestTime = (req, res, next) => {
@@ -56,6 +60,29 @@ const requestEvents = (req, res, next) => {
     next();
 
 }
+
+// раздаем статику
+app.use(express.static( 'public' ));
+
+// реализуем ручку для отправки данных о стейте на сервер
+app.post(
+    '/api/state/update',
+
+    bodyParser.json(),
+    bodyParser.urlencoded({ extended: false }),
+
+    (req, res) => {
+        appState =  req.body;
+        console.log( 'new state', appState );
+        res.status(200).send( appState ).end();
+    }
+);
+
+// и ручку, чтобы забирать state
+app.get(
+    '/api/state/get',
+    (req, res) => res.status(200).send( appState ).end()
+);
 
 app.use( requestTime );
 app.get(

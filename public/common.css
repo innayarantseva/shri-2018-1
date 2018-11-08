@@ -54,7 +54,10 @@ h1 {
 .header__item:hover {
     opacity: 1;
 }
-
+.header__item-link {
+    color:           #333333;
+    text-decoration: none;
+}
 /* Section Styles */
 
 .section {

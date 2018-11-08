@@ -6,7 +6,8 @@ module.exports = {
   mode: 'development',
   entry: {
     main: ['./src/index.js'],
-    camera: ['./src/camera.js']
+    camera: ['./src/camera.js'],
+    store: ['./src/store.js']
   },
   // entry: './src/index.js',
   output: {

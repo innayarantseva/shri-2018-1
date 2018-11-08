@@ -1,10 +1,11 @@
-import { Touch } from './touch.js';
+import { Touch }   from './touch.js';
+
+// data
 
 const data = require('../data/events.json');
-// console.log(data);
 
-// Test to see if the browser supports the HTML template element by checking
-// for the presence of the template element's content attribute.
+// template
+
 if ('content' in document.createElement('template')) {
 
     // Instantiate the table with the existing HTML tbody
@@ -91,14 +92,7 @@ if ('content' in document.createElement('template')) {
             cardData.appendChild( document.importNode( controlTemplate.content, true ) );
 
             // pointer events
-
             Touch( cardData );
-
-
-            console.log('touch');
-        } else {
-            // Touch();
-            console.log('не touch');
         }
 
         card.classList.add( `card__size_${data.events[i].size}`, `card__type_${data.events[i].type}` );
@@ -107,7 +101,4 @@ if ('content' in document.createElement('template')) {
         list.appendChild(clone);
     }
 
-} else {
-    // Find another way to add the rows to the table because
-    // the HTML template element is not supported.
 }
